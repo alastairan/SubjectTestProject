@@ -1,0 +1,24 @@
+﻿
+<h2>Index</h2>
+
+<pre>{{ subjects | json }}</pre>
+<h2>Index</h2>
+
+<p>
+    <a class="btn btn-success" ng-href="#/add">Add Unit</a>
+</p>
+<div class="col-md-6 table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="subject in subjects">
+                <td>{{ subject.Name }}</td>
+                <td><a class="btn btn-danger" ng-href="">Wizard</a> <a class="btn btn-default" ng-href="">Detail</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

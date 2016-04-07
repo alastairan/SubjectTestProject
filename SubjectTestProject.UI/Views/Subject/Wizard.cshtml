@@ -1,0 +1,94 @@
+﻿@model SubjectTestProject.Domain.Model.Subject
+
+@{
+    ViewBag.Title = "Wizard";
+}
+<h2>@Model.Name</h2>
+<h3>Wizard</h3>
+<div ng-app="wizard">
+    <div ng-controller="assessmentController as assessment">
+        <pre>{{subject | json}}</pre>
+        <h4>Assessment</h4>
+        <div class="col-md-6">
+            <form class="form-horizontal" name="productForm" novalidate>
+                <div class="form-group">
+                    <label class="control-label col-md-4">Code</label>
+                    <div class="col-md-6">
+                        <input name="code" type="text" class="form-control" ng-model="asset.code" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-4">Assessment Type</label>
+                    <div class="col-md-6">
+                        <select name="type" type="text" class="form-control" ng-model="asset.type" required>
+                            <option value="WrittenExam">WrittenExam</option>
+                            <option value="VerbalQuestioning">VerbalQuestioning</option>
+                            <option value="Observation">Observation</option>
+                            <option value="Project">Project</option>
+                            <option value="Portfolio">Portfolio</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-4">Start Date</label>
+                    <div class="col-md-6">
+                        <input name="startDate" type="date" class="form-control" ng-model="asset.startDate" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-4">End Date</label>
+                    <div class="col-md-6">
+                        <input name="endDate" type="date" class="form-control" ng-model="asset.endDate" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-4">Units</label>
+                    <div class="col-md-6">
+                        <span ng-repeat="unit in units track by unit.id">
+                            <label>
+                                <input type="checkbox" ng-model="unit.checked" /> {{ unit.name }}
+                            </label>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-6">
+                        <button type="button" class="btn btn-primary" ng-click="addAssessment()">Add Assessment</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6 table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Type</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Units</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="asset in assessments">
+                        <td>{{ asset.code }}</td>
+                        <td>{{ asset.type }}</td>
+                        <td>{{ asset.startDate | date: 'MMM-dd' }}</td>
+                        <td>{{ asset.endDate | date: 'MMM-dd' }}</td>
+                        <td>
+                            <ul>
+                                <li ng-repeat="unit in asset.units">{{ unit }}</li>
+                            </ul>
+                        </td>
+                        <td><button class="btn btn-danger" ng-click="removeAssessment(asset)">Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/angular")
+<script src="~/Scripts/Wizard/app.js"></script>
+<script src="~/Scripts/Wizard/SubjectFactory.js"></script>
+<script src="~/Scripts/Wizard/Assessment.js"></script>
+
