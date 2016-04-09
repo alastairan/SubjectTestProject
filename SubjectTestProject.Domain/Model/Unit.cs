@@ -12,6 +12,11 @@ namespace SubjectTestProject.Domain.Model
             this.AssessmentRequirements = null;
             this.Elements = null;
         }
+        public Unit(string Code, string Name)
+        {
+            this.Code = Code;
+            this.Name = Name;
+        }
 
         public Unit(string Code, string Name, string AssessmentRequirements, string Elements)
         {

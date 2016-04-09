@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -50,14 +51,12 @@ namespace SubjectTestProject.DataAccess
                 Code = code,
                 InformationRequest = trainingComponentInformationRequested,
             };
-
             //getting details for qualification
             var requestResult = proxy.GetDetails(request) as TrainingComponent;
             course.Code = requestResult.Code;
             course.Name = requestResult.Title;
             course.ParentCode = requestResult.ParentCode;
             course.ParentTitle = requestResult.ParentTitle;
-
             //create request objects for unit codes
             TrainingComponentDetailsRequest rr = new TrainingComponentDetailsRequest()
             {
@@ -95,12 +94,32 @@ namespace SubjectTestProject.DataAccess
 
                         if (fixSlash.Contains("Assessment"))
                         {
-                            unit.AssessmentRequirements = fixSlash;
+                            using (var webClient = new WebClient())
+                            {
+                                try
+                                {
+                                    unit.AssessmentRequirements = webClient.DownloadString(fixSlash);
+                                }
+                                catch (WebException)
+                                {
+                                    unit.AssessmentRequirements = null;
+                                }
+                            }
                         }
 
                         else
                         {
-                            unit.Elements = fixSlash;
+                            using (var webClient = new WebClient())
+                            {
+                                try
+                                {
+                                    unit.Elements = webClient.DownloadString(fixSlash);
+                                }
+                                catch (WebException)
+                                {
+                                    unit.Elements = null;
+                                }
+                            }
                         }
                     }
 

@@ -12,6 +12,8 @@ using SubjectTestProject.DataAccess.Model;
 using SubjectTestProject.Domain;
 using SubjectTestProject.Domain.Model;
 using SubjectTestProject.DataAccess;
+using SubjectTestProject.DataAccess.TgaTrainingComp;
+using SubjectTestProject.UI.Models;
 
 namespace SubjectTestProject.UI.Controllers
 {
@@ -30,12 +32,79 @@ namespace SubjectTestProject.UI.Controllers
         [HttpGet]
         public IHttpActionResult Search(string code)
         {
-            var courseDTO = Program.GetCourse(code);
-            if (courseDTO == null)
+            code = code.ToUpperInvariant();
+            //var courseDTO = Program.GetCourse(code);
+            var course = new CourseDTO(code);
+            if (course == null)
             {
                 return NotFound();
             }
-            return Ok(courseDTO);
+            //var dx = db.Courses.FirstOrDefault(s => s.Code == courseDTO.Code);
+            //if (dx == null)
+            //{
+            //    var course = new Course(courseDTO.Code, courseDTO.Name, courseDTO.ParentCode, courseDTO.ParentCode);
+            //    db.Courses.Add(course);
+            //    db.SaveChanges();
+            //}
+            //else
+            //{
+            //    if(courseDTO.Name != null)
+            //    {
+            //        dx.Name = courseDTO.Name;
+            //    }
+            //    if(courseDTO.ParentCode != null)
+            //    {
+            //        dx.ParentCode = courseDTO.ParentCode;
+            //    }
+            //    if(courseDTO.ParentTitle != null)
+            //    {
+            //        dx.ParentTitle = courseDTO.ParentTitle;
+            //    }
+            //    db.Entry(dx).State = EntityState.Modified;
+            //    db.SaveChanges();
+            //}
+            //CourseViewModel cvm = db.Courses.Select(p => new CourseViewModel
+            //{
+            //    Id = p.Id,
+            //    Name = p.Name,
+            //    Code = p.Code
+            //}).FirstOrDefault(s => s.Code == courseDTO.Code);
+            //foreach (UnitTrainingComponentDTO u in courseDTO.Units)
+            //{
+            //    var ux = db.Units.FirstOrDefault(s => s.Code == u.Code);
+            //    if(ux == null)
+            //    {
+            //        var unit = new Unit(u.Code, u.Name, u.AssessmentRequirements, u.Elements);
+            //        db.Units.Add(unit);
+            //        db.SaveChanges();
+            //    }
+            //    else
+            //    {
+            //        if (u.Name != null)
+            //        {
+            //            ux.Name = u.Name;
+            //        }
+            //        if(u.AssessmentRequirements != null)
+            //        {
+            //            ux.AssessmentRequirements = u.AssessmentRequirements;
+            //        }
+            //        if(u.Elements != null)
+            //        {
+            //            ux.Elements = u.Elements;
+            //        }
+            //        db.Entry(ux).State = EntityState.Modified;
+            //        db.SaveChanges();
+            //    }
+            //    var unitx = db.Units.Select(p => new UnitViewModel
+            //    {
+            //        Id = p.Id,
+            //        Code = p.Code,
+            //        Name = p.Name,
+            //        IsEssential = u.IsEssential
+            //    }).FirstOrDefault(a => a.Code == u.Code);
+            //    cvm.AddUnit(unitx);
+            //}
+            return Ok(course);
         }
 
         // PUT: api/Course/5

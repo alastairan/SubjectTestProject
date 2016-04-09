@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="098cb469-375d-4d3c-8ddb-3d44411040b3" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://ws.sandbox.training.gov.au/Deewr.Tga.Webservices/TrainingComponentServiceV3.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="TrainingComponentServiceV3.xsd" MetadataType="Schema" ID="de3d533b-e596-4dc3-b0fd-006573ee0e65" SourceId="1" SourceUrl="https://ws.sandbox.training.gov.au/Deewr.Tga.WebServices/TrainingComponentServiceV3.svc?xsd=xsd6" />
+    <MetadataFile FileName="TrainingComponentServiceV31.xsd" MetadataType="Schema" ID="94badc14-e82b-4a7f-9b61-9de788acbaf3" SourceId="1" SourceUrl="https://ws.sandbox.training.gov.au/Deewr.Tga.WebServices/TrainingComponentServiceV3.svc?xsd=xsd0" />
+    <MetadataFile FileName="TrainingComponentServiceV32.xsd" MetadataType="Schema" ID="2dc3f371-a128-4cd2-9c7f-d126329a8f45" SourceId="1" SourceUrl="https://ws.sandbox.training.gov.au/Deewr.Tga.WebServices/TrainingComponentServiceV3.svc?xsd=xsd4" />
+    <MetadataFile FileName="TrainingComponentServiceV33.xsd" MetadataType="Schema" ID="3e454ba1-5e5b-4011-8359-797c8b8c0f1a" SourceId="1" SourceUrl="https://ws.sandbox.training.gov.au/Deewr.Tga.WebServices/TrainingComponentServiceV3.svc?xsd=xsd5" />
+    <MetadataFile FileName="TrainingComponentService.wsdl" MetadataType="Wsdl" ID="cd23976f-3841-4919-8a8d-6317dab2a854" SourceId="1" SourceUrl="https://ws.sandbox.training.gov.au/Deewr.Tga.WebServices/TrainingComponentServiceV3.svc?wsdl" />
+    <MetadataFile FileName="TrainingComponentServiceV34.xsd" MetadataType="Schema" ID="8d4d6047-9372-463c-98d6-a3f406365e19" SourceId="1" SourceUrl="https://ws.sandbox.training.gov.au/Deewr.Tga.WebServices/TrainingComponentServiceV3.svc?xsd=xsd1" />
+    <MetadataFile FileName="TrainingComponentServiceV3.disco" MetadataType="Disco" ID="677f9e39-decb-4877-b39f-e0690e991c7f" SourceId="1" SourceUrl="https://ws.sandbox.training.gov.au/Deewr.Tga.WebServices/TrainingComponentServiceV3.svc?disco" />
+    <MetadataFile FileName="TrainingComponentServiceV35.xsd" MetadataType="Schema" ID="e4b96f5a-5031-4432-817b-20355469871f" SourceId="1" SourceUrl="https://ws.sandbox.training.gov.au/Deewr.Tga.WebServices/TrainingComponentServiceV3.svc?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

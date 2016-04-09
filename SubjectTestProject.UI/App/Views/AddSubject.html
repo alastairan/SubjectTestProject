@@ -1,8 +1,7 @@
-﻿<div>
-    <pre>{{course | json}}</pre>
-    <h4>Assessment</h4>
-    <div class="col-md-6">
-        <form class="form-horizontal" name="productForm" novalidate>
+﻿<div ng-init="tab = 1">
+    <pre>{{course.Units | json}}</pre>
+    <div class="col-md-6" ng-show="tab === 1">
+        <form class="form-horizontal" name="CourseForm" novalidate>
             <div class="form-group">
                 <label class="control-label col-md-4">Search Course Code</label>
                 <div class="col-md-6">
@@ -10,47 +9,106 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-md-4">Units</label>
+                <label class="control-label col-md-4">{{searchMessage}}</label>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-6">
+                    <button type="button" class="btn btn-primary" ng-click="searchCourse()">Search Course</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6" ng-show="tab === 2">
+        <h2>{{course.Code}}: {{course.Name}}</h2>
+        <form class="form-horizontal" name="CourseForm" novalidate>
+            <div class="form-group">
+                <label class="control-label col-md-4" ng-show="course.Units.length">Select Optional Units</label>
                 <div class="col-md-6">
-                    <span ng-repeat="unit in units track by unit.id">
-                        <label>
-                            <input type="checkbox" ng-model="unit.checked" /> {{ unit.name }}
+                    <span ng-repeat="unit in course.Units track by unit.Code">
+                        <label ng-hide="unit.IsEssential">
+                            <input type="checkbox" ng-model="unit.checked" />{{unit.Code}}: {{ unit.Name }}
                         </label>
                     </span>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-6">
-                    <button type="button" class="btn btn-primary" ng-click="searchCourse()">Add Assessment</button>
+                    <button type="button" class="btn btn-primary" ng-show="course.Units.length" ng-click="selectUnits()">Select Units</button>
+                </div>
+                <div class="col-md-offset-2 col-md-6">
+                    <button type="button" class="btn btn-warning" ng-show="course.Units.length" ng-click="previous()">Previous</button>
                 </div>
             </div>
         </form>
     </div>
-    <div class="col-md-6 table-responsive">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Code</th>
-                    <th>Type</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Units</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="asset in assessments">
-                    <td>{{ asset.code }}</td>
-                    <td>{{ asset.type }}</td>
-                    <td>{{ asset.startDate | date: 'MMM-dd' }}</td>
-                    <td>{{ asset.endDate | date: 'MMM-dd' }}</td>
-                    <td>
-                        <ul>
-                            <li ng-repeat="unit in asset.units">{{ unit }}</li>
-                        </ul>
-                    </td>
-                    <td><button class="btn btn-danger" ng-click="removeAssessment(asset)">Delete</button></td>
-                </tr>
-            </tbody>
-        </table>
+    <div ng-show="tab === 3">
+        <div class="col-md-6">
+            <h2>{{course.Code}}: {{course.Name}}</h2>
+            <h3>Create Subject</h3>
+            <form class="form-horizontal" name="productForm" novalidate>
+                <div class="form-group">
+                    <label class="control-label col-md-4">Name</label>
+                    <div class="col-md-6">
+                        <input name="code" type="text" class="form-control" ng-model="subject.Name" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-4">Start Date</label>
+                    <div class="col-md-6">
+                        <input name="startDate" type="date" class="form-control" ng-model="subject.StartDate" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-4">End Date</label>
+                    <div class="col-md-6">
+                        <input name="endDate" type="date" class="form-control" ng-model="subject.EndDate" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-4">Units</label>
+                    <div class="col-md-6">
+                        <span ng-repeat="unit in course.Units track by unit.Code">
+                            <label ng-show="unit.available">
+                                <input type="checkbox" ng-model="unit.checked" />{{unit.Code}}: {{ unit.Name }}
+                            </label>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-6">
+                        <button type="button" class="btn btn-primary" ng-click="addSubect()">Add Subject</button>
+                    </div>
+                    <div class="col-md-offset-2 col-md-6">
+                        <button type="button" class="btn btn-warning" ng-click="goBack()">Go Back</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6 table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Units</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="sub in subjects">
+                        <td>{{ sub.Name }}</td>
+                        <td>{{ sub.Type }}</td>
+                        <td>{{ sub.StartDate | date: 'MMM-dd' }}</td>
+                        <td>{{ sub.EndDate | date: 'MMM-dd' }}</td>
+                        <td>
+                            <ul>
+                                <li ng-repeat="unit in sub.Units">{{ unit }}</li>
+                            </ul>
+                        </td>
+                        <td><button class="btn btn-danger" ng-click="removeSubject(sub)">Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

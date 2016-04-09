@@ -52,6 +52,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -164,11 +165,20 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\test.cs" />
+    <Compile Include="Models\CourseViewModel.cs" />
+    <Compile Include="Models\UnitViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\TgaTrainingComp\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\Views\AddSubject.html" />
+    <Content Include="App\Views\create-subject.html" />
+    <Content Include="App\Views\establish-course.html" />
+    <Content Include="App\Views\search-course.html" />
     <Content Include="App\Views\Start.html" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
@@ -200,6 +210,19 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="Properties\DataSources\SubjectTestProject.DataAccess.TgaTrainingComp.AddressStates.datasource" />
+    <Content Include="Properties\DataSources\SubjectTestProject.DataAccess.TgaTrainingComp.ClassificationPurpose.datasource" />
+    <Content Include="Properties\DataSources\SubjectTestProject.DataAccess.TgaTrainingComp.DataManager.datasource" />
+    <Content Include="Properties\DataSources\SubjectTestProject.DataAccess.TgaTrainingComp.DeletedTrainingComponent.datasource" />
+    <Content Include="Properties\DataSources\SubjectTestProject.DataAccess.TgaTrainingComp.Lookup.datasource" />
+    <Content Include="Properties\DataSources\SubjectTestProject.DataAccess.TgaTrainingComp.NrtClassificationSchemeResult.datasource" />
+    <Content Include="Properties\DataSources\SubjectTestProject.DataAccess.TgaTrainingComp.RecognitionManager.datasource" />
+    <Content Include="Properties\DataSources\SubjectTestProject.DataAccess.TgaTrainingComp.TrainingComponent.datasource" />
+    <Content Include="Properties\DataSources\SubjectTestProject.DataAccess.TgaTrainingComp.TrainingComponentContactRole.datasource" />
+    <Content Include="Properties\DataSources\SubjectTestProject.DataAccess.TgaTrainingComp.TrainingComponentIndustrySector.datasource" />
+    <Content Include="Properties\DataSources\SubjectTestProject.DataAccess.TgaTrainingComp.TrainingComponentOccupation.datasource" />
+    <Content Include="Properties\DataSources\SubjectTestProject.DataAccess.TgaTrainingComp.TrainingComponentSearchResult.datasource" />
+    <Content Include="Properties\DataSources\SubjectTestProject.DataAccess.TgaTrainingComp.ValidationCode.datasource" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -209,9 +232,19 @@
     <Content Include="Scripts\Wizard\AddSubject.js" />
     <Content Include="Scripts\Wizard\app.js" />
     <Content Include="Scripts\Wizard\Assessment.js" />
+    <Content Include="Scripts\Wizard\createSubject.js" />
+    <Content Include="Scripts\Wizard\establishCourse.js" />
+    <Content Include="Scripts\Wizard\searchCourse.js" />
     <Content Include="Scripts\Wizard\Subject.js" />
     <Content Include="Scripts\Wizard\SubjectConfig.js" />
     <Content Include="Scripts\Wizard\SubjectFactory.js" />
+    <None Include="Service References\TgaTrainingComp\TrainingComponentServiceV3.disco" />
+    <None Include="Service References\TgaTrainingComp\configuration91.svcinfo" />
+    <None Include="Service References\TgaTrainingComp\configuration.svcinfo" />
+    <None Include="Service References\TgaTrainingComp\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -230,6 +263,25 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Subject\Index.cshtml" />
     <Content Include="Views\Subject\Wizard.cshtml" />
+    <None Include="Service References\TgaTrainingComp\TrainingComponentService.wsdl" />
+    <None Include="Service References\TgaTrainingComp\TrainingComponentServiceV3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TgaTrainingComp\TrainingComponentServiceV31.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TgaTrainingComp\TrainingComponentServiceV32.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TgaTrainingComp\TrainingComponentServiceV33.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TgaTrainingComp\TrainingComponentServiceV34.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TgaTrainingComp\TrainingComponentServiceV35.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SubjectTestProject.DataAccess\SubjectTestProject.DataAccess.csproj">
@@ -247,6 +299,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\TgaTrainingComp\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
