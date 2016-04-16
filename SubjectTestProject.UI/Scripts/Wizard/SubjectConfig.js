@@ -7,10 +7,14 @@
         templateUrl: '/App/Views/AddSubject.html',
         controller: 'addSubjectController',
         controllerAs: 'addSubjectCtrl'
-    }).when('/wizard/:id', {
-        templateUrl: '/Views/Subject/Wizard.html'
-    }).when('/details/:id', {
-        templateUrl: '/Views/Subject/Details.html'
+    }).when('/wizard/:Id', {
+        templateUrl: '/App/Views/Wizard.html',
+        controller: 'assessmentController',
+        controllerAs: 'assessmentCtrl'
+    }).when('/details/:Id', {
+        templateUrl: '/App/Views/Detail.html',
+        controller: 'detailController',
+        controllerAs: 'detailCtrl'
     }).otherwise({
         redirectTo: '/'
     });

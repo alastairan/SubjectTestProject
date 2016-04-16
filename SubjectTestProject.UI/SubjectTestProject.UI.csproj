@@ -157,15 +157,26 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\AssessmentController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
+    <Compile Include="Controllers\CourseDeliveryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SubjectController.cs" />
+    <Compile Include="Controllers\SubjectDeliveryController.cs" />
     <Compile Include="Controllers\SubjectsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AssessmentViewModel.cs" />
+    <Compile Include="Models\CourseDeliveryViewModel.cs" />
     <Compile Include="Models\CourseViewModel.cs" />
+    <Compile Include="Models\DetailController.cs" />
+    <Compile Include="Models\DetailVieiwModel.cs" />
+    <Compile Include="Models\SubjectDeliveryUnitViewModel.cs" />
+    <Compile Include="Models\SubjectDeliveryViewModel.cs" />
+    <Compile Include="Models\SubjectViewModel.cs" />
+    <Compile Include="Models\SubjectWizardViewModel.cs" />
     <Compile Include="Models\UnitViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\TgaTrainingComp\Reference.cs">
@@ -177,9 +188,11 @@
   <ItemGroup>
     <Content Include="App\Views\AddSubject.html" />
     <Content Include="App\Views\create-subject.html" />
+    <Content Include="App\Views\Detail.html" />
     <Content Include="App\Views\establish-course.html" />
     <Content Include="App\Views\search-course.html" />
     <Content Include="App\Views\Start.html" />
+    <Content Include="App\Views\Wizard.html" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -233,6 +246,7 @@
     <Content Include="Scripts\Wizard\app.js" />
     <Content Include="Scripts\Wizard\Assessment.js" />
     <Content Include="Scripts\Wizard\createSubject.js" />
+    <Content Include="Scripts\Wizard\Detail.js" />
     <Content Include="Scripts\Wizard\establishCourse.js" />
     <Content Include="Scripts\Wizard\searchCourse.js" />
     <Content Include="Scripts\Wizard\Subject.js" />

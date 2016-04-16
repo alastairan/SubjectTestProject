@@ -10,7 +10,7 @@ namespace SubjectTestProject.Domain.Model
     {
         public Course()
         {
-
+            this.Units = new List<CourseUnit>();
         }
         public Course(string Code,string Name, string ParentCode, string ParentTitle)
         {
@@ -18,11 +18,25 @@ namespace SubjectTestProject.Domain.Model
             this.Name = Name;
             this.ParentCode = ParentCode;
             this.ParentTitle = ParentTitle;
+            this.Units = new List<CourseUnit>();
         }
         public int Id { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
         public string ParentCode { get; set; }
         public string ParentTitle { get; set; }
+        public List<CourseUnit> Units { get; set; }
+        public void AddUnit(CourseUnit unit)
+        {
+            Units.Add(unit);
+        }
+        public void RemoveUnit(CourseUnit unit)
+        {
+            Units.Remove(unit);
+        }
+        public void RemoveAllUnit()
+        {
+            Units.Clear();
+        }
     }
 }

@@ -14,5 +14,8 @@ namespace SubjectTestProject.Domain
         public DbSet<Assessment> Assessments { get; set; }
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Unit> Units { get; set; }
+        public DbSet<CourseDelivery> CourseDeliveries { get; set; }
+        public DbSet<SubjectDelivery> SubjectDeliveries { get; set; }
     }
+    
 }

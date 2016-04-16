@@ -1,61 +1,40 @@
-﻿angular.module('wizard').controller('assessmentController', ['$scope', 'SubjectResource', function ($scope, SubjectResource) {
-    $scope.subject = SubjectResource.get({ id: 1 });
-    $scope.assessments = [];
-    $scope.units = [
-        { id: 1, name: 'ICTPRG527', checked: false },
-        { id: 2, name: 'ICTPRG224', checked: false },
-        { id: 3, name: 'ICTPGR334', checked: false }];
+﻿angular.module('wizard').controller('assessmentController', ['$scope', '$http', '$routeParams', function ($scope, $http, $routeParams) {
+    $http.get('/api/Subjects/GetWizard?code=' + $routeParams.Id + '&what=' + true).success(function (data) {
+        $scope.subject = data;
+        $scope.unitsMaster = angular.copy($scope.subject);
+        $scope.assessments = data.Assessments;
+    });
     $scope.checked_units = [];
-
-    $scope.unitsMaster = angular.copy($scope.units);
-
-    $scope.asset = {
-        units: []
-    };
-
-    $scope.master = angular.copy($scope.asset);
-
+    $scope.assessment = { Units: [] };
+    $scope.master = angular.copy($scope.assessment);
     $scope.addAssessment = function () {
-        var tada = $scope.asset
-        $scope.addUnit(tada);
-        $scope.assessments.push(tada);
-        $scope.asset = angular.copy($scope.master);
-        $scope.units = angular.copy($scope.unitsMaster);
-    };
-    $scope.addUnit = function (asset) {
-        for (var i = 0; i < $scope.units.length; i++) {
-            if ($scope.units[i].checked) {
-                $scope.asset.units.push($scope.units[i].name);
+        for (var i = 0; i < $scope.subject.Units.length; i++) {
+            if ($scope.subject.Units[i].checked) {
+                var unit = {
+                    Id: $scope.subject.Units[i].Id,
+                    Name: $scope.subject.Units[i].Name,
+                    Code: $scope.subject.Units[i].Code
+                }
+                $scope.assessment.Units.push(unit);
             };
         };
-    };
-    $scope.isChecked = function (unit) {
-        var match = false;
-        for (var i = 0 ; i < $scope.checked_units.length; i++) {
-            if ($scope.checked_units[i] == unit) {
-                match = true;
-            }
-        }
-        return match;
-    };
-    $scope.sync = function (bool, unit) {
-        if (bool) {
-            // add item
-            $scope.checked_units.push(unit);
-        } else {
-            // remove item
-            for (var i = 0 ; i < $scope.checked_units.length; i++) {
-                if ($scope.checked_units[i] == unit) {
-                    $scope.checked_units.splice(i, 1);
-                }
-            }
-        }
+        var tada = $scope.assessment;
+        tada.SubjectId = $scope.subject.Id;
+
+        $http.post('/api/Assessment/', tada).success(function (data) {
+            tada.Id = data.Id;
+            $scope.assessments.push(tada);
+            $scope.assessment = angular.copy($scope.master);
+            $scope.subject = angular.copy($scope.unitsMaster);
+        });
     };
     $scope.removeAssessment = function (asset) {
-        for (var i = 0 ; i < $scope.assessments.length; i++) {
-            if ($scope.assessments[i].code == asset.code) {
-                $scope.assessments.splice(i, 1);
+        $http.delete('/api/Assessment/DeleteSubjectAssessment?id=' + asset.Id + '&SubjectId=' + $scope.subject.Id).success(function () {
+            for (var i = 0 ; i < $scope.assessments.length; i++) {
+                if ($scope.assessments[i].code == asset.code) {
+                    $scope.assessments.splice(i, 1);
+                }
             }
-        }
+        });
     }
 }]);

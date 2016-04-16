@@ -3,8 +3,11 @@
         '$scope',
         '$http',
         function ($scope, $http) {
-            $scope.subject = {Units:[]};
+            $scope.Subject = {Units:[]};
             $scope.subjects = [];
+            $scope.subjectDelivery = {};
+            $scope.courseDelivery = {};
+            $scope.DeliveryMode = {};
             $scope.searchMessage = null;
             $scope.searchCourse = function () {
                 $scope.searchMessage = "Searching...";
@@ -24,7 +27,10 @@
                     $scope.searchMessage = response.statusText;
                 });
             };
-            $scope.selectUnits = function () {
+            $scope.createCourseDelivery = function () {
+                $http.post('/api/CourseDelivery/', $scope.courseDelivery).success(function (data) {
+                    $scope.courseDeliveryId = data.Id;
+                });
                 angular.forEach($scope.course.Units, function (u) {
                     if (u.checked) {
                         u.checked = false;
@@ -51,4 +57,47 @@
                 });
                 $scope.tab = 2;
             };
+            $scope.addSubect = function () {
+                angular.forEach($scope.course.Units, function (u) {
+                    if (u.checked) {
+                        u.checked = false;
+                        u.available = false;
+                        $scope.Unit = {
+                            Id: u.Id,
+                            Name: u.Name,
+                            Code: u.Code
+                        }
+                        $scope.Subject.Units.push($scope.Unit);
+                        $scope.Unit = {};
+                    }
+                });
+                $scope.Subject.CourseId = $scope.course.Id;
+                $scope.Subject.CourseDeliveryId = $scope.courseDeliveryId;
+                $http.post('/api/SubjectDelivery/', $scope.Subject).success(function (data) {
+                    $scope.subjects.push(data);
+                });
+                $scope.Subject = { Units: [] };
+            };
+            $scope.removeSubject = function (data) {
+                $scope.AddUnit = [];
+                angular.forEach(data.Units, function (d) {
+                    $scope.AddUnit.push(d.Id);
+                });
+                angular.forEach($scope.course.Units, function (u) {
+                    if (!u.available) {
+                        for (var i = 0; i < data.Units.length; i++) {
+                            if (data.Units[i].Id == u.Id) {
+                                u.available = true;
+                            }
+                        }
+                    }
+                });
+                $http.delete('/api/SubjectDelivery/' + data.Id).success(function () {
+                    for (var i = 0 ; i < $scope.subjects.length; i++) {
+                        if ($scope.subjects[i].Id == data.Id) {
+                            $scope.subjects.splice(i, 1);
+                        }
+                    }
+                });
+            }
     }]);

@@ -1,0 +1,84 @@
+﻿<h2>{{subject.Name}}</h2>
+<h3>Wizard</h3>
+<div>
+    <pre>{{subject | json}}<br />{{assessments | json}}</pre>
+
+    <h4>Assessment</h4>
+    <div class="col-md-6">
+        <form class="form-horizontal" name="productForm" novalidate>
+            <div class="form-group">
+                <label class="control-label col-md-4">Code</label>
+                <div class="col-md-6">
+                    <input name="code" type="text" class="form-control" ng-model="assessment.Code" required />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4">Assessment Type</label>
+                <div class="col-md-6">
+                    <select name="type" type="text" class="form-control" ng-model="assessment.Type" required>
+                        <option value="WrittenExam">WrittenExam</option>
+                        <option value="VerbalQuestioning">VerbalQuestioning</option>
+                        <option value="Observation">Observation</option>
+                        <option value="Project">Project</option>
+                        <option value="Portfolio">Portfolio</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4">Start Date</label>
+                <div class="col-md-6">
+                    <input name="startDate" type="date" class="form-control" ng-model="assessment.StartDate" required />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4">End Date</label>
+                <div class="col-md-6">
+                    <input name="endDate" type="date" class="form-control" ng-model="assessment.EndDate" required />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4">Units</label>
+                <div class="col-md-6">
+                    <span ng-repeat="unit in subject.Units track by unit.Id">
+                        <label>
+                            <input type="checkbox" ng-model="unit.checked" />{{unit.Code}}: {{ unit.Name }}
+                        </label>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-6">
+                    <button type="button" class="btn btn-primary" ng-click="addAssessment()">Add Assessment</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6 table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Type</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Units</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="assessment in assessments">
+                    <td>{{ assessment.Code }}</td>
+                    <td>{{ assessment.Type }}</td>
+                    <td>{{ assessment.StartDate | date: 'MMM-dd' }}</td>
+                    <td>{{ assessment.EndDate | date: 'MMM-dd' }}</td>
+                    <td>
+                        <ul>
+                            <li ng-repeat="unit in assessment.Units">{{ unit.Code }}: {{unit.Name}}</li>
+                        </ul>
+                    </td>
+                    <td><button class="btn btn-danger" ng-click="removeAssessment(assessment)">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<a class="btn btn-warning" ng-href="#/details/{{subject.Id}}">Finish</a>

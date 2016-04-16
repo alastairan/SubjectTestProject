@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using SubjectTestProject.Domain;
 using SubjectTestProject.Domain.Model;
+using SubjectTestProject.UI.Models;
 
 namespace SubjectTestProject.UI.Controllers
 {
@@ -18,16 +19,58 @@ namespace SubjectTestProject.UI.Controllers
         private DomainDbContext db = new DomainDbContext();
 
         // GET: api/Subjects
-        public IQueryable<Subject> GetSubjects()
+        public IQueryable<SubjectViewModel> GetSubjects()
         {
-            return db.Subjects;
+            var model = db.SubjectDeliveries.Include("Subject").Include("Course").Select(S => new SubjectViewModel()
+            {
+                Id = S.Subject.Id,
+                Name = S.Subject.Name,
+                CourseCode = S.Subject.Course.Code,
+                CourseName = S.Subject.Course.Name,
+                DelliveryId = S.Id
+            });
+            return model;
         }
 
         // GET: api/Subjects/5
-        [ResponseType(typeof(Subject))]
+        [HttpGet]
         public IHttpActionResult GetSubject(int id)
         {
-            Subject subject = db.Subjects.Find(id);
+            Subject subject = db.Subjects.Include("Units").Include("Assessments").FirstOrDefault(s => s.Id == id);
+            if (subject == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(subject);
+        }
+        [HttpGet]
+        public IHttpActionResult GetWizard(int code, bool what)
+        {
+            var subject = db.Subjects.Include("Units").Include("Assessments").Include("Assessments.Units").Select(s => new SubjectWizardViewModel()
+            {
+                Id = s.Id,
+                Name = s.Name,
+                Assessments = s.Assessments.Select(a => new AssessmentViewModel() {
+                    Id = a.Id,
+                    Code = a.Code,
+                    StartDate = a.StartDate,
+                    EndDate = a.EndDate,
+                    SubjectId = s.Id,
+                    Type = a.Type,
+                    Units = a.Units.Select(au => new SubjectDeliveryUnitViewModel()
+                    {
+                        Id = au.Id,
+                        Code = au.Code,
+                        Name = au.Name
+                    }).ToList()
+                }).ToList(),
+                Units = s.Units.Select(u => new SubjectDeliveryUnitViewModel() {
+                    Id = u.Id,
+                    Code = u.Code,
+                    Name = u.Name
+                }).ToList()
+            }).FirstOrDefault(s => s.Id == code);
             if (subject == null)
             {
                 return NotFound();
@@ -37,7 +80,7 @@ namespace SubjectTestProject.UI.Controllers
         }
 
         // PUT: api/Subjects/5
-        [ResponseType(typeof(void))]
+        [HttpPut]
         public IHttpActionResult PutSubject(int id, Subject subject)
         {
             if (!ModelState.IsValid)
@@ -72,7 +115,7 @@ namespace SubjectTestProject.UI.Controllers
         }
 
         // POST: api/Subjects
-        [ResponseType(typeof(Subject))]
+        [HttpPost]
         public IHttpActionResult PostSubject(Subject subject)
         {
             if (!ModelState.IsValid)
@@ -87,16 +130,15 @@ namespace SubjectTestProject.UI.Controllers
         }
 
         // DELETE: api/Subjects/5
-        [ResponseType(typeof(Subject))]
+        [HttpDelete]
         public IHttpActionResult DeleteSubject(int id)
         {
-            Subject subject = db.Subjects.Find(id);
+            Subject subject = db.Subjects.Include("Subject").FirstOrDefault(s => s.Id == id);
             if (subject == null)
             {
                 return NotFound();
             }
-
-            db.Subjects.Remove(subject);
+            
             db.SaveChanges();
 
             return Ok(subject);
